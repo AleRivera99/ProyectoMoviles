@@ -46,6 +46,6 @@
     <activity
         android:id="@+id/nav_slideshow"
         android:name="com.example.proyectoterminado.MapsActivity"
-        android:label="activity_maps"
+        android:label="activity_maaps"
         tools:layout="@layout/activity_maps" />
 </navigation>
