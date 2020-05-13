@@ -2,6 +2,7 @@ package com.example.proyectoterminado
 
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,8 +14,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.proyectoterminado.helpers.MainActivityHelper
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),MainActivityHelper {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -50,4 +52,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    override fun showToast(message: String) = Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+
 }

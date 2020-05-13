@@ -63,13 +63,13 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
+//        setContentView(R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        fusedLocationClient = FusedLocationProviderClient(this)
+        fusedLocationClient = FusedLocationProviderClient(this.requireContext())
         inicializarLocationRequest()
         callback = object : LocationCallback() {
 
@@ -80,7 +80,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
                     mMap.uiSettings.isMyLocationButtonEnabled = true
                     for (ubicacion in locationResult?.locations!!) {
                         Toast.makeText(
-                            applicationContext,
+                            this@MapsFragments.context,
                             ubicacion.latitude.toString() + "," + ubicacion.longitude.toString(),
                             Toast.LENGTH_LONG
                         ).show()
@@ -149,7 +149,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     private fun cambiarEstiloMapa() {
         // mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         val exitoCambioMapa =
-            mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.estilo_mapa))
+            mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this.context, R.raw.estilo_mapa))
 
 
         if (!exitoCambioMapa) {
@@ -222,7 +222,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     }
 
     override fun onMarkerDragEnd(marcador: Marker?) {
-        Toast.makeText(this, "Acabo de mover el marcador", Toast.LENGTH_LONG).show()
+        Toast.makeText(this.context, "Acabo de mover el marcador", Toast.LENGTH_LONG).show()
 
         Log.d("Marcador Final", marcador?.position?.latitude.toString())
         val index = listaMarcadores?.indexOf(marcador!!)
@@ -231,7 +231,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     }
 
     override fun onMarkerDragStart(marcador: Marker?) {
-        Toast.makeText(this, "Empezando a mover el marcador", Toast.LENGTH_LONG).show()
+        Toast.makeText(this.context, "Empezando a mover el marcador", Toast.LENGTH_LONG).show()
 
         Log.d("Marcador Inicial", marcador?.position?.latitude.toString())
         val index = listaMarcadores?.indexOf(marcador!!)
@@ -247,7 +247,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         if (numeroClicks != null) {
             numeroClicks++
             marcador?.tag = numeroClicks
-            Toast.makeText(this, "Se han dado " + numeroClicks.toString() + "  clicks",
+            Toast.makeText(this.context, "Se han dado " + numeroClicks.toString() + "  clicks",
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -256,11 +256,11 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
 
     private fun validarPermisosUbicacion(): Boolean {
         val hayUbicacionPrecisa = ActivityCompat.checkSelfPermission(
-            this,
+            this.requireContext(),
             permisoFineLocation
         ) == PackageManager.PERMISSION_GRANTED
         val hayUbicacionOrdinaria = ActivityCompat.checkSelfPermission(
-            this,
+            this.requireContext(),
             permisoFineLocation
         ) == PackageManager.PERMISSION_GRANTED
         return hayUbicacionPrecisa && hayUbicacionOrdinaria
@@ -282,10 +282,10 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     @RequiresApi(Build.VERSION_CODES.M)
     private fun pedirPermiso() {
         val deboProveerContexto =
-            ActivityCompat.shouldShowRequestPermissionRationale(this, permisoFineLocation)
+            ActivityCompat.shouldShowRequestPermissionRationale(this.requireActivity(), permisoFineLocation)
 
         if (deboProveerContexto) {
-            Toast.makeText(this, "Holi", Toast.LENGTH_LONG).show()
+            Toast.makeText(this.requireContext(), "Holi", Toast.LENGTH_LONG).show()
             solicitudPermiso()
         } else {
             solicitudPermiso()
@@ -311,7 +311,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     obtenerUbicacion()
                 } else {
-                    Toast.makeText(this, "No diste permiso para acceder a la ubicacion",
+                    Toast.makeText(this.requireContext(), "No diste permiso para acceder a la ubicacion",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -324,7 +324,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     }
 
     private fun cargarURL(url: String) {
-        val queue = Volley.newRequestQueue(this)
+        val queue = Volley.newRequestQueue(this.requireContext())
 
         val solicitud =
             StringRequest(Request.Method.GET, url, Response.Listener<String> { response ->
