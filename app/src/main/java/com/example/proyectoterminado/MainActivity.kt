@@ -14,9 +14,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.proyectoterminado.helpers.MainActivityHelper
 
-class MainActivity : AppCompatActivity(),MainActivityHelper {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -52,7 +51,5 @@ class MainActivity : AppCompatActivity(),MainActivityHelper {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    override fun showToast(message: String) = Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
 
 }
