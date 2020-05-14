@@ -59,6 +59,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         // Inflate the layout for this fragment
 
         val view =  inflater.inflate(R.layout.fragment_maps_fragments, container, false)
+          //Descomenta esta linea si la que he puesto no funciona, no la uso por metodo deprecado, pero con eso deberia funcionar
 /*        val mapFragment = (requireFragmentManager()
             .findFragmentById(R.id.map) as SupportMapFragment?)!!*/
         val mapFragment = (childFragmentManager
@@ -88,7 +89,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         }
         return view
     }
-    //Pone el codigo aca si no te funciona en onCreateView
+    //Pone el codigo aca si no te funciona o funciona raro en onCreateView
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }
