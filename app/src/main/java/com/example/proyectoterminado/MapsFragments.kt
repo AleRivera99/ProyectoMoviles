@@ -59,8 +59,9 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         // Inflate the layout for this fragment
 
         val view =  inflater.inflate(R.layout.fragment_maps_fragments, container, false)
-        (requireFragmentManager()
-            .findFragmentById(R.id.map) as SupportMapFragment?)!!.getMapAsync(this)
+        val mapFragment = (requireFragmentManager()
+            .findFragmentById(R.id.map) as SupportMapFragment?)!!
+        mapFragment.getMapAsync(this)
         fusedLocationClient = FusedLocationProviderClient(this.requireContext())
         inicializarLocationRequest()
         callback = object : LocationCallback() {
@@ -84,6 +85,10 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
             }
         }
         return view
+    }
+    //Pone el codigo aca si no te funciona en onCreateView
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
     private fun inicializarLocationRequest() {
         locationRequest = LocationRequest()
