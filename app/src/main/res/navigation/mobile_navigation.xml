@@ -14,9 +14,12 @@
 <!--        <action-->
 <!--            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"-->
 <!--            app:destination="@id/nav_home_second" />-->
-        <action
+<!--        <action
             android:id="@+id/action_nav_home_to_mapsActivity"
-            app:destination="@id/mapsActivity" />
+            app:destination="@id/mapsActivity" />-->
+        <action
+            android:id="@+id/action_nav_home_to_nav_map"
+            app:destination="@id/nav_map" />
     </fragment>
 <!--    <fragment-->
 <!--        android:id="@+id/nav_home_second"-->
@@ -45,8 +48,8 @@
         android:label="activity_maaps"
         tools:layout="@layout/fragment_maps_fragments" />
     <fragment
-        android:id="@+id/mapsActivity"
-        android:name="com.example.proyectoterminado.MapsFragments"
-        android:label="fragment_maps_fragments"
-        tools:layout="@layout/fragment_maps_fragments" />
+        android:id="@+id/nav_map"
+        android:name="com.example.proyectoterminado.MapFragment"
+        android:label="MapFragment" />
+
 </navigation>
