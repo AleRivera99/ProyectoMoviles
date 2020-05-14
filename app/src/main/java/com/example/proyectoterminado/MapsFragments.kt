@@ -1,30 +1,30 @@
 package com.example.proyectoterminado
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
-import com.google.android.gms.maps.*
-
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.gson.Gson
 
@@ -43,6 +43,8 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     private var locationRequest: LocationRequest? = null
     private var callback: LocationCallback? = null
     private var listaMarcadores: ArrayList<Marker>? = null
+    //prueba de objeto SupportMapFragment
+    private lateinit var mySupportMapManager:SupportMapFragment
 
     //Marcadpres de mapa
     private var marcadorGolden: Marker? = null
@@ -55,17 +57,10 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_maps_fragments, container, false)
 
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
+        val view =  inflater.inflate(R.layout.fragment_maps_fragments, container, false)
+        (requireFragmentManager()
+            .findFragmentById(R.id.map) as SupportMapFragment?)!!.getMapAsync(this)
         fusedLocationClient = FusedLocationProviderClient(this.requireContext())
         inicializarLocationRequest()
         callback = object : LocationCallback() {
@@ -88,8 +83,8 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
                 }
             }
         }
+        return view
     }
-
     private fun inicializarLocationRequest() {
         locationRequest = LocationRequest()
         locationRequest?.interval = 999999999999999999
@@ -236,7 +231,7 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     }
 
     override fun onMarkerDrag(marcador: Marker?) {
-        title = marcador?.position?.latitude.toString() + " - " + marcador?.position?.longitude.toString()
+//        title = marcador?.position?.latitude.toString() + " - " + marcador?.position?.longitude.toString()
     }
 
     override fun onMarkerClick(marcador: Marker?): Boolean {
