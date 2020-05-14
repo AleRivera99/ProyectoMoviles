@@ -59,7 +59,9 @@ class MapsFragments : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         // Inflate the layout for this fragment
 
         val view =  inflater.inflate(R.layout.fragment_maps_fragments, container, false)
-        val mapFragment = (requireFragmentManager()
+/*        val mapFragment = (requireFragmentManager()
+            .findFragmentById(R.id.map) as SupportMapFragment?)!!*/
+        val mapFragment = (childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?)!!
         mapFragment.getMapAsync(this)
         fusedLocationClient = FusedLocationProviderClient(this.requireContext())
