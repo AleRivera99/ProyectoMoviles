@@ -38,14 +38,15 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-    <fragment
-        android:id="@+id/mapsActivity"
-        android:name="com.example.proyectoterminado.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/activity_maps" />
+
     <activity
         android:id="@+id/nav_slideshow"
-        android:name="com.example.proyectoterminado.MapsActivity"
+        android:name="com.example.proyectoterminado.MapsFragments"
         android:label="activity_maaps"
-        tools:layout="@layout/activity_maps" />
+        tools:layout="@layout/fragment_maps_fragments" />
+    <fragment
+        android:id="@+id/mapsActivity"
+        android:name="com.example.proyectoterminado.MapsFragments"
+        android:label="fragment_maps_fragments"
+        tools:layout="@layout/fragment_maps_fragments" />
 </navigation>
