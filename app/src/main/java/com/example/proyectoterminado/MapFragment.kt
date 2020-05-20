@@ -3,6 +3,7 @@ package com.example.proyectoterminado
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.gson.Gson
 
 
@@ -68,13 +70,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         transaction.add(R.id.mapView,fragment)
         transaction.commit()
         fragment.getMapAsync(this)
-//        val mapFragment = (requireFragmentManager()
-//            .findFragmentById(R.id.mapView) as SupportMapFragment?)
-//        mapFragment?.getMapAsync(this)
+       val mapFragment = (requireFragmentManager()
+           .findFragmentById(R.id.mapView) as SupportMapFragment?)
+        mapFragment?.getMapAsync(this)
         fusedLocationClient = FusedLocationProviderClient(this.requireContext())
         inicializarLocationRequest()
         callback = object : LocationCallback() {
-
+//Funcion que obtiene marcadores y locacion y la muestra
             override fun onLocationResult(locationResult: LocationResult?) {
                 super.onLocationResult(locationResult)
                 if (mMap != null) {
@@ -112,6 +114,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         super.onActivityCreated(savedInstanceState)
 
     }
+
+    //Funcion que me solicita mi ubicacion exacta (Bryan si solo queres tu ubicacion solo deja esta y la de que esta arriba onLocationResult)
     private fun inicializarLocationRequest() {
         locationRequest = LocationRequest()
         locationRequest?.interval = 999999999999999999
@@ -154,7 +158,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
 
     }
-
+//Funcion para color del mapa llamas el archivo que esta en la carpeta raw
     private fun cambiarEstiloMapa() {
         // mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         val exitoCambioMapa =
@@ -171,7 +175,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         mMap.setOnMarkerClickListener(this)
         mMap.setOnMarkerDragListener(this)
     }
-
+//Funcion que cree para probar marcadores
     private fun MarcadoresEstaticos() {
         val GOLDEN_GATE = LatLng(37.8199286, -122.4782551)
         val PIRAMIDES = LatLng(29.9772962, 31.1324855)
@@ -199,7 +203,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         )
         marcadorTorre?.tag = 0
     }
-
+// Funcion de los marcadores con esta funcion tambien se llama el json de la funcion CargarURl
     private fun prepararMarcadores() {
         listaMarcadores = ArrayList()
         mMap.setOnMapClickListener { location: LatLng? ->
@@ -277,14 +281,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
     @SuppressLint("MissingPermission")
     private fun obtenerUbicacion() {
-        /*   fusedLocationClient?.lastLocation?.addOnSuccessListener (this, object: OnSuccessListener<Location> {
-               override fun onSuccess(location:Location?) {
+           fusedLocationClient?.lastLocation?.addOnSuccessListener (object:
+               OnSuccessListener<Location> {
+               override fun onSuccess(location: Location?) {
                    if (location !=null) {
-                       Toast.makeText(applicationContext,location?.latitude.toString()+ "-"+location?.longitude.toString(),Toast.LENGTH_LONG).show()
+                       Toast.makeText(this@MapFragment.requireContext(),location?.latitude.toString()+ "-"+location?.longitude.toString(),Toast.LENGTH_LONG).show()
                    }
 
                }
-           })*/
+           })
         fusedLocationClient?.requestLocationUpdates(locationRequest, callback, null)
     }
 
@@ -332,6 +337,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         fusedLocationClient?.removeLocationUpdates(callback)
     }
 
+    //Funcion para cargar la distancia, pasos y la mandas a llamar en la funcion de marcadores
     private fun cargarURL(url: String) {
         val queue = Volley.newRequestQueue(this.requireContext())
 
@@ -349,7 +355,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         queue.add(solicitud)
     }
 
-
+    //Funcion para obtener coordenadas
     private fun obtenerCoordenadas(json: String): PolylineOptions {
         val gson = Gson()
         val objeto = gson.fromJson(json, com.example.proyectoterminado.Response::class.java)
