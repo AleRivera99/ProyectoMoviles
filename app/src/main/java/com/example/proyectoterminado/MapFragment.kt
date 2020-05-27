@@ -97,6 +97,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         }
         return view
     }
+
+
     override fun onMapReady(googleMap: GoogleMap) {
 
         mMap = googleMap
@@ -126,38 +128,38 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
 
 
-    private fun dibujarLineas() {
-        val coordenadasLineas = PolylineOptions()
-            .add(LatLng(13.6819319, -89.2651937))
-            .add(LatLng(19.444104913340259, -99.14651446044444))
-            .add(LatLng(19.44404092953131, -99.14057102054359))
-            .add(LatLng(19.437794547975827, -99.13751095533371))
-            .pattern(arrayListOf<PatternItem>(Dash(10f), Gap(20f)))
-            .color(Color.CYAN)
-            .width(30f)
-        val coordenadasPoligonos = PolygonOptions()
-            .add(LatLng(19.433383649089755, -99.1424274445801))
-            .add(LatLng(19.43134426617855, -99.13905724883081))
-            .add(LatLng(19.42880157493221, -99.138451404486956))
-            .strokePattern(arrayListOf<PatternItem>(Dash(10f), Gap(20f)))
-            .strokeColor(Color.BLUE)
-            .fillColor(Color.GREEN)
-            .strokeWidth(10f)
+        private fun dibujarLineas() {
+            val coordenadasLineas = PolylineOptions()
+                .add(LatLng(13.6819319, -89.2651937))
+                .add(LatLng(19.444104913340259, -99.14651446044444))
+                .add(LatLng(19.44404092953131, -99.14057102054359))
+                .add(LatLng(19.437794547975827, -99.13751095533371))
+                .pattern(arrayListOf<PatternItem>(Dash(10f), Gap(20f)))
+                .color(Color.CYAN)
+                .width(30f)
+            val coordenadasPoligonos = PolygonOptions()
+                .add(LatLng(19.433383649089755, -99.1424274445801))
+                .add(LatLng(19.43134426617855, -99.13905724883081))
+                .add(LatLng(19.42880157493221, -99.138451404486956))
+                .strokePattern(arrayListOf<PatternItem>(Dash(10f), Gap(20f)))
+                .strokeColor(Color.BLUE)
+                .fillColor(Color.GREEN)
+                .strokeWidth(10f)
 
-        val coordernadasCirculo = CircleOptions()
-            .center(LatLng(19.434200011141158, -99.1477056965232))
-            .radius(120.0)
-            .strokePattern(arrayListOf<PatternItem>(Dash(10f), Gap(10f)))
-            .strokeWidth(15f)
-            .strokeColor(Color.WHITE)
-            .fillColor(Color.YELLOW)
+            val coordernadasCirculo = CircleOptions()
+                .center(LatLng(19.434200011141158, -99.1477056965232))
+                .radius(120.0)
+                .strokePattern(arrayListOf<PatternItem>(Dash(10f), Gap(10f)))
+                .strokeWidth(15f)
+                .strokeColor(Color.WHITE)
+                .fillColor(Color.YELLOW)
 
-        mMap.addPolyline(coordenadasLineas)
-        mMap.addPolygon(coordenadasPoligonos)
-        mMap.addCircle(coordernadasCirculo)
+            mMap.addPolyline(coordenadasLineas)
+            mMap.addPolygon(coordenadasPoligonos)
+            mMap.addCircle(coordernadasCirculo)
 
 
-    }
+        }
 //Funcion para color del mapa llamas el archivo que esta en la carpeta raw
     private fun cambiarEstiloMapa() {
         // mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN

@@ -17,9 +17,7 @@
 <!--        <action
             android:id="@+id/action_nav_home_to_mapsActivity"
             app:destination="@id/mapsActivity" />-->
-        <action
-            android:id="@+id/action_nav_home_to_nav_map"
-            app:destination="@id/nav_map" />
+
     </fragment>
 <!--    <fragment-->
 <!--        android:id="@+id/nav_home_second"-->
@@ -41,15 +39,5 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-
-    <activity
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.proyectoterminado.MapsFragments"
-        android:label="activity_maaps"
-        tools:layout="@layout/fragment_maps_fragments" />
-    <fragment
-        android:id="@+id/nav_map"
-        android:name="com.example.proyectoterminado.MapFragment"
-        android:label="MapFragment" />
 
 </navigation>
